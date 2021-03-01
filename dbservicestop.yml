@@ -1,0 +1,12 @@
+---
+
+##Demo Ansible Playbook to stop Application Services
+- hosts: dblinuxserver
+  become: yes
+  tasks:
+     # purpose of this task is to stop application services
+       - name:  verify application processes are stopped
+         shell: scriptFile="/dba/oracle/admin/Aniruddha/shutdown_script_live.sh"
+         shell: sudo sh $scriptFile
+   
+...

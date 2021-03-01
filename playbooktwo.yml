@@ -1,0 +1,15 @@
+---
+- name: Run Updates on App Servers and wait 10 mins
+  hosts: winserver
+  connection: winrm
+
+  tasks:
+    win_updates:
+      category_names:
+      - CriticalUpdates
+      - DefinitionUpdates
+      - SecurityUpdates
+      - Updates
+      whitelist:
+      - KB4592484
+...

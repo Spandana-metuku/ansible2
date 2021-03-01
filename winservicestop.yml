@@ -1,0 +1,11 @@
+---
+##Demo Ansible Playbook to stop Application Services
+- name: Running service stop script
+  hosts: winserver
+  become: yes
+  vars:
+    scriptFile: E:\Infra\EpmRestarts\startAll_EPM.bat
+  tasks:
+  - name: stop the app service
+    shell: "sh {{ scriptFile }} > /tmp/"
+...

@@ -1,0 +1,15 @@
+---
+- name: Installing kb articles 
+  hosts: winserver
+  tasks:
+     - name: Download KB4585212 for Server 2012 R2
+       win_get_url:
+              url: http://download.windowsupdate.com/c/msdownload/update/software/updt/2020/10/windows8.1-kb4585212-x64-ndp48_d8aeadd273da9666d5c9a2c163ab400b9a5f2c79.msu
+              dest: C:\temp\windows8.1-kb4585212-x64-ndp48_d8aeadd273da9666d5c9a2c163ab400b9a5f2c79.msu
+     - name: Install all security updates with automatic reboots
+       win_updates:
+         category_names:
+         - SecurityUpdates
+         whitelist: 
+            - KB4585212
+...

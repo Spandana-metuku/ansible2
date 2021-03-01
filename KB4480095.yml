@@ -1,0 +1,23 @@
+---
+- name: Installing kb articles
+  hosts: winserver
+  tasks:
+      - name: Download KB4480095 for WinServer 2012 R2
+        win_get_url:
+            url: http://download.windowsupdate.com/d/msdownload/update/software/updt/2019/01/windows8.1-kb4480095-x64_1c0b5e3e61ae0291223cd1a4a712c28ffcd27c58.msu
+            dest: C:\temp\KB4480095.msu
+        register: kb
+      - debug:
+
+      - name: Install hotfix
+        win_hotfix:
+           hotfix_kb: KB4480095
+           source: C:\temp\KB4480095.msu
+           state: present
+        register: hotfix_result
+      - debug:
+
+      - name: Reboot host if required
+        win_reboot:
+        when: hotfix_result.reboot_required
+...

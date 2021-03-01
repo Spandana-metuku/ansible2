@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: zpc
+  become: yes
+  tasks:
+  - name: hostname
+    debug: 
+      var=ansible_hostname
+...

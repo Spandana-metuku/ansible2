@@ -1,0 +1,10 @@
+---
+- name: Install Putty executable
+  hosts: win
+  tasks :
+   - name: Downloading the Putty installer
+     win_get_url: 
+        url: https://puttygen.com/download.php?val=4
+        dest: C:\Anstemp\
+...
+

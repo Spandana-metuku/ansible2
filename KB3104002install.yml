@@ -1,0 +1,13 @@
+---
+- name: Downloading Security update MS15-124
+  hosts: win
+  tasks:
+    - name: Download KB KB3104002 for Win 2012 R2
+      win_get_url:
+         url: https://www.microsoft.com/en-us/download/details.aspx?id=50340
+         dest: C:\Anstemp\KB3104002.msu
+    - name: Installing Package
+      win_package:
+         path: C:\Anstemp\KB3104002.msu
+         state: present   
+...

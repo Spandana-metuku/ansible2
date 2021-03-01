@@ -1,0 +1,9 @@
+---
+##Demo Ansible Playbook to stop Application Services
+- name: Running service stop script 
+  hosts: bserver 
+  gather_facts: true 
+  become: yes
+  tasks:
+  - debug: var={{ansible_distribution}}
+...

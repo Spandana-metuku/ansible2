@@ -1,0 +1,29 @@
+---
+- name: Installing kb articles
+  hosts: winserver
+  tasks:
+     - name: Download KB4578962,KB4486105,KB4480095 for WinServer.
+       win_get_url:
+        url: ['http://download.windowsupdate.com/d/msdownload/update/software/secu/2016/07/windows8.1-kb3172729-x64_e8003822a7ef4705cbb65623b72fd3cec73fe222.msu','http://download.windowsupdate.com/d/msdownload/update/software/secu/2020/10/windows8.1-kb4578962-x64_e893763aaae7c427ca1bfc4871de73c2e19f7223.msu','http://download.windowsupdate.com/d/msdownload/update/software/updt/2019/01/windows8.1-kb4480095-x64_1c0b5e3e61ae0291223cd1a4a712c28ffcd27c58.msu']
+        dest: ['C:\temp\windows8.1-kb4578962-x64_e893763aaae7c427ca1bfc4871de73c2e19f7223.msu','C:\temp\windows8.1-kb4486105-x64_1cba02a8aec5034da82cb2dca744648bc4a4eaef.msu','C:\temp\windows8.1-kb4480095-x64_1c0b5e3e61ae0291223cd1a4a712c28ffcd27c58.msu']
+     - name: Install all security updates with automatic reboots
+       win_updates:
+         category_names:
+         - SecurityUpdates
+         whitelist:
+            - KB4578962 
+            - KB4486105 
+            - KB4480095 
+
+         state: searched
+       register: patchoutput
+     - debug: var=patchoutput
+     - name: install hotfix validating KB
+       win_hotfix:
+        hotfix_kb: ['KB4578962','KB4486105','KB4480095']
+        source: ['http://download.windowsupdate.com/d/msdownload/update/software/secu/2016/07/windows8.1-kb3172729-x64_e8003822a7ef4705cbb65623b72fd3cec73fe222.msu','http://download.windowsupdate.com/d/msdownload/update/software/secu/2020/10/windows8.1-kb4578962-x64_e893763aaae7c427ca1bfc4871de73c2e19f7223.msu','http://download.windowsupdate.com/d/msdownload/update/software/updt/2019/01/windows8.1-kb4480095-x64_1c0b5e3e61ae0291223cd1a4a712c28ffcd27c58.msu']
+        state: present
+       register: hotfixstatus
+     - debug: var=hotfixstatus.changed
+     - debug: var=hotfixstatus.kb
+...

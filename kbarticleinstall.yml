@@ -1,0 +1,17 @@
+---
+- name: Installing kb articles 
+  hosts: winserver
+  tasks:
+     - name: Download KB3172729 for Server 2012 R2
+       win_get_url:
+              url: http://download.windowsupdate.com/d/msdownload/update/software/secu/2016/07/windows8.1-kb3172729-x64_e8003822a7ef4705cbb65623b72fd3cec73fe222.msu
+              dest: C:\temp\windows8.1-kb3172729-x64_e8003822a7ef4705cbb65623b72fd3cec73fe222.msu
+     - name: Install all security updates with automatic reboots
+       win_updates:
+         category_names:
+         - SecurityUpdates
+         whitelist: 
+            - KB3172729
+     #  register: patchoutput1
+    # - debug: var=patchoutput1
+...

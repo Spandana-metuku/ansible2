@@ -1,0 +1,18 @@
+---
+# performYumUpdateRebootServer.yml
+# performs yum update and reboots server
+- name: perform yum update / reboot server
+  hosts: all
+  become: yes
+  tasks:
+        - name: Perform yum update of all packages
+          yum:
+              name: '*'
+              state: latest
+          register: result
+        - debug: 
+              var: result
+# this task is to restart the system
+        - name: restart system
+          reboot:
+...

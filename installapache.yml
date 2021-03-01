@@ -1,0 +1,15 @@
+---
+##Demo Ansible Playbook to install apache  Services
+- hosts: linuxserver
+  become: yes
+  tasks:
+# purpose of this task to install httpd
+       - name: install httpd
+         yum:
+             name: httpd
+             state: latest
+         register: httpserver
+         tags: httpsserver
+       - debug: var=httpserver
+         tags: httpserver
+...

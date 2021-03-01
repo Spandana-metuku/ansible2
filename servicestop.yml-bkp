@@ -1,0 +1,14 @@
+---
+
+##Demo Ansible Playbook to stop Application Services
+- hosts: linuxserver
+  become: yes
+  tasks:
+  vars:
+      scriptfile: "{{/tmp/test.sh}}"
+     # purpose of this task is to stop application services
+       - name:  verify application processes are stopped
+         shell:  sh $scriptFile
+         reboot: yes  
+
+...

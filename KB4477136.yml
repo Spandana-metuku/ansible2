@@ -1,0 +1,18 @@
+---
+- name: Installing kb articles
+  hosts: winserver
+  tasks:
+     - name: Download KB4477136 for Server 2012 R2
+       win_get_url:
+              url: http://download.windowsupdate.com/d/msdownload/update/software/secu/2018/12/windows10.0-kb4477136-x64_5bfa3bb10370a5cee17c6239c99d97cb54464f95.msu
+              dest: C:\temp\windows10.0-kb4477136-x64_5bfa3bb10370a5cee17c6239c99d97cb54464f95.msu
+     - name: Install all security updates with automatic reboots
+       win_updates:
+         category_names:
+         - SecurityUpdates
+         whitelist:
+            - KB4477136 
+       register: patchoutput
+     - debug: var=patchoutput
+...
+

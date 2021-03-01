@@ -1,0 +1,23 @@
+---
+- name: Installing kb articles
+  hosts: winserver
+  tasks:
+      - name: Download KB4578962 for WinServer 2012 R2
+        win_get_url:
+            url: http://download.windowsupdate.com/d/msdownload/update/software/secu/2020/10/windows8.1-kb4578962-x64_e893763aaae7c427ca1bfc4871de73c2e19f7223.msu
+            dest: C:\temp\KB4578962.msu
+        register: kb
+      - debug:
+
+      - name: Install hotfix
+        win_hotfix:
+           hotfix_kb: KB4578962
+           source: C:\temp\KB4578962.msu
+           state: present
+        register: hotfix_result
+      - debug:
+
+      - name: Reboot host if required
+        win_reboot:
+        when: hotfix_result.reboot_required
+...

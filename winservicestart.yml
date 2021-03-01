@@ -1,0 +1,11 @@
+---
+##Demo Ansible Playbook to start Application Services
+- name: Running service start script
+  hosts: winserver
+  become: yes
+  vars:
+    scriptFile: E:\Infra\EpmRestarts\startAll_EPM.bat
+  tasks:
+  - name: start the app service
+    shell: "sh {{ scriptFile }} > /tmp/"
+...

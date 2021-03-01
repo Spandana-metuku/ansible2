@@ -1,0 +1,23 @@
+---
+- name: Installing kb articles
+  hosts: winserver
+  tasks:
+      - name: Download KB4486105 for WinServer 2012 R2
+        win_get_url:
+            url: http://download.windowsupdate.com/d/msdownload/update/software/ftpk/2019/12/windows8.1-kb4486105-x64_1cba02a8aec5034da82cb2dca744648bc4a4eaef.msu
+            dest: C:\temp\KB4486105.msu
+        register: kb
+      - debug: 
+
+      - name: Install hotfix
+        win_hotfix:
+           hotfix_kb:  KB4486105
+           source: C:\temp\KB4486105.msu
+           state: present
+        register: hotfix_result
+      - debug:
+
+      - name: Reboot host if required
+        win_reboot:
+        when: hotfix_result.reboot_required
+...
